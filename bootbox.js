@@ -88,7 +88,9 @@
     // show the dialog immediately by default
     show: true,
     // dialog container
-    container: "body"
+    container: "body",
+    // default timeout for setTimeout function in Alert
+    timeOutCloseDialogforAlert: 2000
   };
 
   // our public object; augmented after our private API
@@ -778,7 +780,11 @@
       }
     };
     */
-
+    
+    // Close dialog with timeout
+    // Valid only for the alert () function.
+    setTimeout( function() { dialog.modal('hide') }, defaults.timeOutCloseDialogforAlert)
+    
     return dialog;
 
   };
