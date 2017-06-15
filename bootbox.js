@@ -89,8 +89,8 @@
     show: true,
     // dialog container
     container: "body",
-    // default timeout for setTimeout function in Alert
-    timeOutCloseDialogforAlert: 2000
+    // Time out to close modal window in a call to alert ()
+    timeOutCloseModalforAlert: 0
   };
 
   // our public object; augmented after our private API
@@ -155,11 +155,15 @@
     if (typeof options !== "object") {
       throw new Error("Please supply an object of options");
     }
-
+  
     if (!options.message) {
       throw new Error("Please specify a message");
     }
-
+    
+    if (options.timeOutCloseModalforAlert < 0) {
+        throw new Error("Please specify a value positive or zero");
+    }
+    
     // make sure any supplied options take precedence over defaults
     options = $.extend({}, defaults, options);
 
@@ -783,7 +787,8 @@
     
     // Close dialog with timeout
     // Valid only for the alert () function.
-    setTimeout( function() { dialog.modal('hide') }, defaults.timeOutCloseDialogforAlert)
+    if (options.className === "bootbox-alert" && defaults.timeOutCloseModalforAlert > 0)
+        setTimeout(function () { dialog.modal('hide') }, defaults.timeOutCloseModalforAlert)
     
     return dialog;
 
